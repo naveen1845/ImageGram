@@ -1,5 +1,7 @@
 import express from  "express";
 import connectDB from "./Config/dbConfig.js";
+import { CloudinaryUploader } from "./Config/multerConfig.js";
+import { createPost } from "./Controller/postController.js";
 
 let PORT = 3000;
 
@@ -21,5 +23,7 @@ app.get("/hello" , (req, res) => {
 app.get("/location" , (req, res) => {
    return res.send({city : "Navelim" , state : "Goa"});
 })
+
+app.post("/posts" , CloudinaryUploader.single('image'), createPost)
 
 

@@ -1,5 +1,11 @@
 import dotenv from "dotenv";
 
-dotenv.config({path : '../.env'});
+dotenv.config();
 
-export const db_url = process.env.db_url;
+export const DB_URL = process.env.DB_URL;
+
+export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
+
+export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
+
+export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;

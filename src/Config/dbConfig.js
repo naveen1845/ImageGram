@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { db_url } from "./serverConfig.js";
+import { DB_URL } from "./serverConfig.js";
 
 export default async function connectDB() {
     try {
-        await mongoose.connect(db_url);
+        await mongoose.connect(DB_URL);
         console.log("Connected to the DB");
         
     } catch (error) {
