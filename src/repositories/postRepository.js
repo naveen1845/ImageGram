@@ -24,8 +24,19 @@ export const findAllPost = async function(limit, page){
     try {
         const offset = (page - 1) * limit;
 
-        const foundPost = await post.find().skip(offset).limit(limit);
+        const foundPost = await post.find().sort({ createdAt : -1 }).skip(offset).limit(limit);
         return foundPost;
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const countDocuments = async function(){
+    try {
+        const count = await post.countDocuments();
+
+        return count
     } catch (error) {
         console.log(error);
         

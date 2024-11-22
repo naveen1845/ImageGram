@@ -1,4 +1,4 @@
-import { createPostService } from "../service/postService.js";
+import { createPostService, getAllPostService } from "../service/postService.js";
 
 export async function createPost(req, res){
     
@@ -18,12 +18,19 @@ export async function createPost(req, res){
     })
 }
 
-export async function findAllUserController(req, res){
-    // get limit from the user
-    // get page from the user
+export async function findAllPostsController(req, res){
+    const limit = req.query.limit || 5;
+    const page = req.query.page || 1;
 
-    // call the service function by passing the limit and the user object
+    const paginatedPosts = await getAllPostService({
+        limit: limit,
+        page: page
+    })
 
-    // return a response
+    res.status(200).json({
+        success: true,
+        message: 'posts fetched successfully',
+        data: paginatedPosts
+    })
 }
 
