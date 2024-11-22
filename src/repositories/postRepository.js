@@ -20,9 +20,11 @@ export const findPostById = async function(id){
     }
 }
 
-export const findAllPost = async function(){
+export const findAllPost = async function(limit, page){
     try {
-        const foundPost = await post.find()
+        const offset = (page - 1) * limit;
+
+        const foundPost = await post.find().skip(offset).limit(limit);
         return foundPost;
     } catch (error) {
         console.log(error);

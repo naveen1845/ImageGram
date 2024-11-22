@@ -1,7 +1,6 @@
 import express from  "express";
 import connectDB from "./Config/dbConfig.js";
-import { CloudinaryUploader } from "./Config/multerConfig.js";
-import { createPost } from "./Controller/postController.js";
+import apiRouter from "./Routers/apiRouter.js";
 
 let PORT = 3000;
 
@@ -12,18 +11,9 @@ app.listen(PORT , () => {
     connectDB();
 })
 
-app.get("/" , (req, res) => {
-   return res.send("HOME");
-})
+app.use('/api', apiRouter)
 
-app.get("/hello" , (req, res) => {
-   return res.send("hello from Naveen");
-})
 
-app.get("/location" , (req, res) => {
-   return res.send({city : "Navelim" , state : "Goa"});
-})
-
-app.post("/posts" , CloudinaryUploader.single('image'), createPost)
+// app.post("/posts" , CloudinaryUploader.single('image'), createPost)
 
 

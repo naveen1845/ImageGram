@@ -1,9 +1,7 @@
 import { createPostService } from "../service/postService.js";
 
 export async function createPost(req, res){
-    console.log(req.file.path);
-    console.log(req.body.caption);
-
+    
     const caption = req.body.caption;
     const image = req.file.path;
 
@@ -19,3 +17,13 @@ export async function createPost(req, res){
 
     })
 }
+
+export async function findAllUserController(req, res){
+    // get limit from the user
+    // get page from the user
+
+    // call the service function by passing the limit and the user object
+
+    // return a response
+}
+
