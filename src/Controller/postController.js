@@ -1,4 +1,4 @@
-import { createPostService, getAllPostService } from "../service/postService.js";
+import { createPostService, getAllPostService, getPostbyIdAndUpdateService } from "../service/postService.js";
 
 export async function createPost(req, res){
     
@@ -32,5 +32,29 @@ export async function findAllPostsController(req, res){
         message: 'posts fetched successfully',
         data: paginatedPosts
     })
+}
+
+
+export async function getPostbyIdAndUpdateController(req, res){
+    try {
+        const updateObject = req.body;
+        if (req.file) {
+            updateObject.image = req.file.path;
+        }
+        const response = await getPostbyIdAndUpdateService(req.params.id, updateObject);
+
+        res.status(200).json({
+            success: true,
+            message: 'post updated successfully',
+            updatedPost: response
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: 'internal server error'
+        })
+    }
+    
 }
 

@@ -1,3 +1,4 @@
+import e from "express";
 import post from "../Schema/post.js";
 
 export const createPost = async function(caption, image){
@@ -37,6 +38,16 @@ export const countDocuments = async function(){
         const count = await post.countDocuments();
 
         return count
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const findPostByIdAndUpdate = async function(id, updateObject) {
+    try {
+        const updatedPost = await post.findByIdAndUpdate(id, updateObject, {new: true})
+        return updatedPost;
     } catch (error) {
         console.log(error);
         

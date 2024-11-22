@@ -1,4 +1,5 @@
-import { countDocuments, createPost, findAllPost } from "../repositories/postRepository.js";
+
+import { countDocuments, createPost, findAllPost, findPostByIdAndUpdate } from "../repositories/postRepository.js";
 
 export const createPostService = async (createPostObject) => {
     const caption = createPostObject.caption;
@@ -26,4 +27,10 @@ export const getAllPostService = async (getAllPostObject) => {
         totalPages
 
     }
+}
+
+export const getPostbyIdAndUpdateService = async (id, updateObject) => {
+    const response = await findPostByIdAndUpdate(id, updateObject);
+
+    return response;
 }
