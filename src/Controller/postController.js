@@ -1,4 +1,4 @@
-import { createPostService, getAllPostService, getPostbyIdAndUpdateService } from "../service/postService.js";
+import { createPostService, deleteImageFromCloudinary, getAllPostService, getPostbyIdAndDeleteService, getPostbyIdAndUpdateService } from "../service/postService.js";
 
 export async function createPost(req, res){
     
@@ -27,7 +27,7 @@ export async function findAllPostsController(req, res){
         page: page
     })
 
-    res.status(200).json({
+    return res.status(200).json({
         success: true,
         message: 'posts fetched successfully',
         data: paginatedPosts
@@ -43,18 +43,49 @@ export async function getPostbyIdAndUpdateController(req, res){
         }
         const response = await getPostbyIdAndUpdateService(req.params.id, updateObject);
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: 'post updated successfully',
             updatedPost: response
         })
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: 'internal server error'
         })
     }
     
+}
+
+export async function getPostbyIdAndDeleteController(req, res) {
+    try {
+        const id = req.params.id;
+
+        const response = await getPostbyIdAndDeleteService(id);
+        if(!response){
+            return res.status(404).json({
+                success: false,
+                message: 'Post not found'
+            })
+        }
+
+        const imageUrl = response.image;
+        const publicID = imageUrl.split('/').pop().split('.')[0];
+
+        await deleteImageFromCloudinary(publicID);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Post deleted Successfully',
+            postDeleted: response
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message:'Internal server error',
+            data: error
+        })
+    }
 }
 

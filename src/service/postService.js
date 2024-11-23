@@ -1,5 +1,6 @@
 
-import { countDocuments, createPost, findAllPost, findPostByIdAndUpdate } from "../repositories/postRepository.js";
+import { cloudinary } from "../Config/cloudinaryConfig.js";
+import { countDocuments, createPost, findAllPost, findPostByIdAndDelete, findPostByIdAndUpdate } from "../repositories/postRepository.js";
 
 export const createPostService = async (createPostObject) => {
     const caption = createPostObject.caption;
@@ -33,4 +34,22 @@ export const getPostbyIdAndUpdateService = async (id, updateObject) => {
     const response = await findPostByIdAndUpdate(id, updateObject);
 
     return response;
+}
+
+export const getPostbyIdAndDeleteService = async(id) => {
+    const response = await findPostByIdAndDelete(id);
+
+    return response;
+}
+
+
+export const deleteImageFromCloudinary = async(publicID) => {
+    try {
+        const response = await cloudinary.uploader.destroy(publicID);
+        return response;
+        
+    } catch (error) {
+        console.log('error deleting image from cloudinary');
+        
+    }
 }

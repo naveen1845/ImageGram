@@ -54,3 +54,13 @@ export const findPostByIdAndUpdate = async function(id, updateObject) {
     }
 }
 
+export const findPostByIdAndDelete = async function (id) {
+    try {
+        const response = await post.findByIdAndDelete(id);
+        return response;
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
