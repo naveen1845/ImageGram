@@ -1,5 +1,15 @@
 import user from "../Schema/user.js";
 
+export const createUser = async function(createUserObject){
+    try {
+        const userCreated = await user.create(createUserObject);
+        return userCreated;
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
 export const findUserByEmail = async function(email) {
     try {
         const userFound = await user.findOne({ email });
