@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose" 
+import bcrypt from  "bcrypt"
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -10,6 +11,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
         validate:{
             validator: function(emailValue){
                 return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailValue);
@@ -24,6 +26,17 @@ const userSchema = new mongoose.Schema({
     }
 }, {timestamps: true})
 
+userSchema.pre('save', function modifyPassword(next){
+    const user = this;
+
+    const SALT = bcrypt.genSaltSync(9);
+
+    const hashedPassword = bcrypt.hashSync(user.password, SALT);
+
+    user.password = hashedPassword;
+
+    next();
+})
 
 const user = mongoose.model("Users", userSchema);
 
