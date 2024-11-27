@@ -4,7 +4,7 @@ export async function createPost(req, res){
     
     const caption = req.body.caption;
     const image = req.file.path;
-    const userId = req.user;
+    const userId = req.user._id;
 
     const post = await createPostService({ 
         caption: caption,
@@ -64,7 +64,7 @@ export async function getPostbyIdAndDeleteController(req, res) {
     try {
         const id = req.params.id;
 
-        const response = await getPostbyIdAndDeleteService(id);
+        const response = await getPostbyIdAndDeleteService(id, req.user);
         if(!response){
             return res.status(404).json({
                 success: false,
@@ -83,6 +83,12 @@ export async function getPostbyIdAndDeleteController(req, res) {
             postDeleted: response
         })
     } catch (error) {
+        if(error.status){
+            return res.status(error.status).json({
+                success: false,
+                message: error.message
+            })
+        }
         return res.status(500).json({
             success: false,
             message:'Internal server error',

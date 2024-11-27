@@ -9,6 +9,5 @@ export const generateToken = (payload) => {
 
 export const verifyJWT = (token) => {
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
-    console.log("decoded : " + decoded);
     return decoded;
 }

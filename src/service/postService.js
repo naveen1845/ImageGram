@@ -1,6 +1,6 @@
 
 import { cloudinary } from "../Config/cloudinaryConfig.js";
-import { countDocuments, createPost, findAllPost, findPostByIdAndDelete, findPostByIdAndUpdate } from "../repositories/postRepository.js";
+import { countDocuments, createPost, findAllPost, findPostById, findPostByIdAndDelete, findPostByIdAndUpdate } from "../repositories/postRepository.js";
 
 export const createPostService = async (createPostObject) => {
     const caption = createPostObject.caption;
@@ -37,7 +37,16 @@ export const getPostbyIdAndUpdateService = async (id, updateObject) => {
     return response;
 }
 
-export const getPostbyIdAndDeleteService = async(id) => {
+export const getPostbyIdAndDeleteService = async(id, user) => {
+    const post = await findPostById(id)
+
+    if (post.userId._id != user._id) {
+        throw{
+            status: 400,
+            message: 'Unauthorised'
+        }
+    }
+
     const response = await findPostByIdAndDelete(id);
 
     return response;

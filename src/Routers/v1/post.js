@@ -12,6 +12,6 @@ router.get('/', findAllPostsController)
 
 router.put('/:id', CloudinaryUploader.single('image'), getPostbyIdAndUpdateController);
 
-router.delete('/:id',isAuthenticated, isPostMadeBySameUser ,getPostbyIdAndDeleteController)
+router.delete('/:id',isAuthenticated ,getPostbyIdAndDeleteController)
 
 export default router;
