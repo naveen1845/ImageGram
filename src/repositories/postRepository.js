@@ -1,9 +1,9 @@
 import e from "express";
 import post from "../Schema/post.js";
 
-export const createPost = async function(caption, image){
+export const createPost = async function(caption, image, userId){
     try {
-        const newPost = await post.create({caption, image})
+        const newPost = await post.create({caption, image, userId})
         return newPost;
     } catch (error) {
         console.log(error);
@@ -13,7 +13,7 @@ export const createPost = async function(caption, image){
 
 export const findPostById = async function(id){
     try {
-        const foundPost = await post.findById({ id })
+        const foundPost = await post.findById(id).populate('userId', 'username email _id')
         return foundPost;
     } catch (error) {
         console.log(error);
@@ -25,7 +25,7 @@ export const findAllPost = async function(limit, page){
     try {
         const offset = (page - 1) * limit;
 
-        const foundPost = await post.find().sort({ createdAt : -1 }).skip(offset).limit(limit);
+        const foundPost = await post.find().sort({ createdAt : -1 }).skip(offset).limit(limit).populate('userId', 'username email _id');
         return foundPost;
     } catch (error) {
         console.log(error);

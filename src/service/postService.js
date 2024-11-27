@@ -5,8 +5,9 @@ import { countDocuments, createPost, findAllPost, findPostByIdAndDelete, findPos
 export const createPostService = async (createPostObject) => {
     const caption = createPostObject.caption;
     const image = createPostObject.image;
+    const userId = createPostObject.userId;
 
-    const post = await createPost(caption, image);
+    const post = await createPost(caption, image, userId);
 
     return post;
 }

@@ -23,7 +23,7 @@ export async function isAuthenticated(req, res, next) {
             })
         }
 
-        req.user = response
+        req.user = response._id
 
         next();
     } catch (error) {

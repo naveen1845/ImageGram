@@ -4,10 +4,12 @@ export async function createPost(req, res){
     
     const caption = req.body.caption;
     const image = req.file.path;
+    const userId = req.user;
 
     const post = await createPostService({ 
         caption: caption,
-        image: image
+        image: image,
+        userId: userId
     });
  
     return res.status(201).json({
@@ -88,4 +90,5 @@ export async function getPostbyIdAndDeleteController(req, res) {
         })
     }
 }
+
 
