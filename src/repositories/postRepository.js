@@ -1,4 +1,3 @@
-import e from "express";
 import post from "../Schema/post.js";
 
 export const createPost = async function(caption, image, userId){
