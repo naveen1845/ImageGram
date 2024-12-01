@@ -15,8 +15,7 @@ export const findPostById = async function(id){
         const foundPost = await post.findById(id).populate('userId', 'username email _id')
         return foundPost;
     } catch (error) {
-        console.log(error);
-        
+        throw error 
     }
 }
 
